@@ -1,0 +1,126 @@
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;" class="md-whiteframe-z1">
+	
+	<md-content class="md-padding bg-asphalt">
+		
+		<div style="float: left" layout="row" layout-align="center center">
+	    <i class="icon material-icons i-24 cl-clouds" style="font-size: 50pt;">description</i>
+      <h4 class="cl-clouds md-flex"><strong>{{template.title}}</strong></h4>
+		</div>		    
+		
+    <div style="float: right" layout="row" layout-align="right center">
+      <h4 class="cl-clouds" style="text-align: right;">
+	      {{author.name}} {{author.lastName}} 
+	      <br/>
+	      <span style="font-size: small;">{{template.date | date:'dd-MM-yyyy HH:mm'}}</span>
+	    </h4>
+	    <i class="icon material-icons i-24 cl-clouds" style="font-size: 50pt;">face</i>
+    </div>
+		
+	</md-content>
+	
+	<md-content class="md-padding" style="border-bottom: solid 2px rgba(52, 73, 94, 1);" ng-if="template.description || template.tags.length">
+		
+		<div class="md-list md-whiteframe-z0 bg-white m-b">
+    
+      <div class="md-list-item" ng-if="template.description">
+        <div class="md-list-item-content">
+          <p><small class="font-thin">Descrizione</small></p>
+          <h3 class="text-md">{{template.description}}</h3>
+        </div>
+      </div>
+      
+      <div class="md-list-item" ng-if="template.tags.length">
+	      <div class="md-list-item-content">
+          <p><small class="font-thin">Tag</small></p>
+	        <md-chips ng-model="selectedTags" readonly="true">
+			      <md-chip-template>
+			        <span>
+			          <strong>{{$chip.title}}</strong>
+			        </span>
+			      </md-chip-template>
+			    </md-chips>
+        </div>
+      </div>
+      
+    </div>
+		
+	</md-content>
+    
+  <md-content>
+       
+    <div class="md-list md-whiteframe-z0 bg-white m-b">
+      <div class="md-list-item" ng-repeat="document in template.documents">
+        
+        <div class="md-list-item-left circle bg-river" >
+          <a href="{{document.documentUrl}}"><i class="icon material-icons i-24 cl-clouds">cloud_download</i></a>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">Scarica</h3>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">Template</h3>
+        </div>
+        
+      </div>
+    </div>
+    
+  </md-content>
+    
+  <md-content>
+  
+    <!-- preferences -->
+    <div layout="row" class="md-margin">
+      <span flex></span>
+      <md-button class="md-fab md-mini md-primary" aria-label="Utile" ng-click="TemplatesShowCtrl.addPreference(true)" ng-disabled="disabledLike">
+        <md-tooltip md-visible="true" md-direction="top">
+          Utile
+        </md-tooltip>
+        {{like}}
+      </md-button>
+      <md-button class="md-fab md-mini md-warn" aria-label="Non Utile" ng-click="TemplatesShowCtrl.addPreference(false)" ng-disabled="disabledDontLike">
+        <md-tooltip md-visible="true" md-direction="top">
+          Non utile
+        </md-tooltip>
+        {{dontLike}}
+      </md-button>
+    </div>  
+      
+  </md-content>
+  
+</section>
+ 
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+  
+	<md-toolbar class="bg-asphalt">
+	  <div class="md-toolbar-tools">
+	    <h2 class="md-flex">Commenti</h2>
+	  </div>
+	</md-toolbar>
+   
+  <md-content class="md-padding">
+  
+	  <div class="bg-river card-comment md-margin md-whiteframe-z1" ng-repeat="comment in template.comments">
+	    <h4 class="title" style="color: black;">{{comment.authorName}} {{comment.authorLastName}}</h4>
+	    <span class="sub-title">il {{comment.date | date:'dd-MM-yyyy HH:mm'}}</span>
+	    <p>
+	      {{comment.text}}
+	    </p>
+	  </div>
+	  
+	  <md-input-container class="md-block md-margin">
+	    <label>Inserisci commento</label>
+	    <textarea ng-model="comment" columns="1" md-maxlength="150" rows="3"></textarea>
+	  </md-input-container>
+	  
+	  <md-button ng-disabled="!comment" class="md-raised md-primary" ng-click="TemplatesShowCtrl.addComment()">Commenta</md-button>
+	  
+	  <md-button class="md-margin md-fab md-fab-bottom-right left" aria-label="Insert Drive" style="position: fixed;" ui-sref="app.templatesEdit({id: template._id})">
+	    <i class="icon material-icons i-24">edit</i>
+	    <md-tooltip md-visible="true" md-direction="left">
+	      Modifica
+	    </md-tooltip>
+	  </md-button>
+  
+  </md-content>
+  
+</section>
