@@ -1,0 +1,201 @@
+<form name="editTool" class="form-horizontal m-t">
+  <!-- title -->
+  <md-input-container class="md-block input-form">
+    <label class="input-label">Titolo</label>
+    <input md-maxlength="100" required name="title" ng-model="newTool.title" />
+    <div ng-messages="editTool.title.$error">
+      <div ng-message="required">Questo campo &egrave; richiesto</div>
+      <div ng-message="md-maxlength">Il titolo deve avere meno di 100 caratteri</div>
+    </div>
+  </md-input-container>
+  
+  <!-- description -->
+  <md-input-container class="md-block input-form">
+    <label class="input-label">Descrizione</label>
+    <textarea md-maxlength="300" name="description" ng-model="newTool.description" rows="3" columns="3" ></textarea>
+    <div ng-messages="editTool.description.$error">
+      <div ng-message="md-maxlength">La descrizione deve avere meno di 300 caratteri</div>
+    </div>
+  </md-input-container>
+  
+  <!-- tags -->
+  <md-chips ng-model="selectedTags" md-autocomplete-snap
+				  md-transform-chip="ToolsEditCtrl.transformChip($chip)"
+          md-on-add="ToolsEditCtrl.addTag($chip)"
+          md-on-remove="ToolsEditCtrl.removeTag($chip)"
+          md-require-match="false">
+    <md-autocomplete
+        md-selected-item="selectedItemTag"
+        md-search-text="searchTextTag"
+        md-selected-item-change=""
+        md-search-text-change=""
+        md-items="tag in ToolsEditCtrl.searchTags(searchTextTag)"
+        md-min-length="1"
+			  md-autofocus="false"
+			  md-autoselect="false"
+        md-item-text="tag.title"
+        placeholder="Cerca un tag">
+      <span md-highlight-text="searchTextTag">{{tag.title}}</span>
+    </md-autocomplete>
+    <md-chip-template>
+      <span>
+        <strong>{{$chip.title}}</strong>
+      </span>
+    </md-chip-template>
+  </md-chips>
+  
+  <!-- text -->
+  <div ng-if="newTool.text">
+    <md-input-container class="md-block input-form">
+      <span style="margin-top: 20px; margin-bottom: 5px;">Contenuto</span>
+      <div class="">
+        <div text-angular ng-model="newTool.text" class="btn-groups"></div>
+      </div>
+    </md-input-container>
+  </div>
+  
+  <!-- files -->
+  <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;" ng-if="newTool.documents.length">
+    
+    <md-toolbar class="bg-asphalt">
+      <div class="md-toolbar-tools">
+        <h2 class="md-flex">Modifica Allegati</h2>
+      </div>
+    </md-toolbar>
+        
+    <md-content class="md-padding">
+      
+      <div class="md-list md-whiteframe-z0 bg-white m-b">   
+        <div class="md-list-item" ng-repeat="document in newTool.documents">
+          
+          <div class="md-list-item-left circle bg-river" href="{{document.documentUrl}}">
+            <i class="button-pointer icon material-icons i-24 cl-clouds">cloud_download</i>
+          </div>
+          <div class="md-list-item-left circle bg-alizarin" ng-click="ToolsEditCtrl.eliminaDocumento(document)">
+            <i class="icon material-icons i-24 cl-clouds">delete</i>
+          </div>
+          
+          <div class="md-list-item-content">
+            <h3 class="text-md">Elimina</h3>
+          </div>
+          <div class="md-list-item-content">
+            <h3 class="text-md">Allegato</h3>
+          </div>
+          
+        </div>
+      </div>
+      
+    </md-content>
+      
+  </section>
+  
+  <!-- file uploader -->
+  <div class="padding-out" style="margin-top: 2%; width: 90%; margin-left: auto; margin-right: auto;" ng-show="!newTool.text && !newTool.documents.length">
+	  <label class="input-label">Caricamento File</label>
+	  <div class="box" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+	    <div class="col-md-3">
+	      <div class="p-md">
+	        <div ng-show="uploader.isHTML5" class="m-b-md">
+	          <!-- 3. nv-file-over uploader="link" over-class="className" -->
+	          <div class="b-a b-dashed p-lg bg-white text-center m-b" nv-file-over="" over-class="b-info" uploader="uploader">
+	            Drag & Drop zone
+	          </div>
+	          <!-- Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" -->
+	        </div>
+	
+	        <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+	        <p>File multipli</p>
+	        <input type="file" nv-file-select="" uploader="uploader" multiple  />
+	
+	        <p class="m-t-md">Singolo file</p>
+	        <input name="file" type="file" nv-file-select="" uploader="uploader" />
+	      </div>
+	    </div>
+	    <div class="col-md-9">
+	      <div class="p-md">
+	        <div class="m-b"><b class="badge bg-info pos-rlt m-r-xs"><i class="arrow right b-info pull-in"></i>{{ uploader.queue.length }}</b> file(s)</div>
+	        <table class="table bg-white b-a">
+	          <thead>
+	            <tr>
+	              <th width="50%">Nome</th>
+	              <th ng-show="uploader.isHTML5">Dimensione</th>
+	              <th ng-show="uploader.isHTML5">Progresso</th>
+	              <th>Stato</th>
+	              <th>Azioni</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr ng-repeat="item in uploader.queue">
+	              <td><strong>{{ item.file.name }}</strong></td>
+	              <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+	              <td ng-show="uploader.isHTML5">
+	                <div class="progress progress-sm no-margin m-t-xs">
+	                  <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+	                </div>
+	              </td>
+	              <td class="text-center">
+	                <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+	                <span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
+	                <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+	              </td>
+	              <td nowrap>
+	                <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+	                    Carica
+	                </button>
+	                <button type="button" class="btn btn-default btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+	                    Cancella
+	                </button>
+	                <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
+	                    Rimuovi
+	                </button>
+	              </td>
+	            </tr>
+	          </tbody>
+	        </table>
+	        <div>
+	          <div>
+	            <p>Progresso Coda:</p>
+	            <div class="progress bg-light dker" style="">
+	              <div class="progress-bar progress-bar-striped bg-info" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+	            </div>
+	          </div>
+	          <button type="button" class="btn btn-addon btn-info" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+	            <i class="fa fa-cloud-upload"></i> Carica tutti
+	          </button>
+	          <button type="button" class="btn btn-addon btn-default" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+	            <i class="fa fa-ban"></i> Cancella tutti
+	          </button>
+	          <button type="button" class="btn btn-addon btn-default" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+	            <i class="fa fa-times"></i> Rimuovi tutti
+	          </button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+  
+  <div layout="row" style="position: fixed; bottom: 2%; right: 2%;">
+    <span flex></span>
+    
+    <md-button class="md-fab left bg-emerald" aria-label="Salva" 
+               ng-disabled="tool.documents == newTool.documents && 
+                            tool.title == newTool.title && 
+                            tool.description == newTool.description && !tagMod"
+               ng-click="ToolsEditCtrl.save()">
+      <i class="icon material-icons i-24">save</i>
+      <md-tooltip md-visible="true" md-direction="top">
+        Salva
+      </md-tooltip>
+    </md-button>
+    
+    <md-button ng-if="currentUser.admin || currentUser.moderator" 
+               class="md-fab left bg-alizarin" aria-label="Elimina" ng-click="ToolsEditCtrl.remove()">
+      <i class="icon material-icons i-24">delete</i>
+      <md-tooltip md-visible="true" md-direction="top">
+        Elimina
+      </md-tooltip>
+    </md-button>
+    
+  </div>
+  
+</form>
