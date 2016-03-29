@@ -1,0 +1,165 @@
+<nav ui-nav>
+  <ul class="nav">
+
+    <li ui-sref-active="active">
+      <a md-ink-ripple ui-sref="app.home">
+        <i class="icon material-icons i-20">home</i>
+        <span class="font-normal">Home</span>
+      </a>
+    </li>
+    
+    <li ui-sref-active="active">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="pull-right up"></i>
+        <i class="icon material-icons i-20 cl-clouds">subject</i>
+        <span class="font-normal">Articoli</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="app.articles">Visualizza tutti</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="app.articlesCreate">Crea nuovo</a>
+        </li>
+      </ul>
+    </li>
+    
+    <li ui-sref-active="active">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="pull-right up"></i>
+        <i class="icon material-icons i-20 cl-emerald">description</i>
+        <span class="font-normal">Template</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="app.templates">Visualizza tutti</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="app.templatesCreate">Crea nuovo</a>
+        </li>
+      </ul>
+    </li>
+    
+    <li ui-sref-active="active">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="pull-right up"></i>
+        <i class="icon material-icons i-20 cl-river">build</i>
+        <span class="font-normal">Strumenti</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="app.tools">Visualizza tutti</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="app.toolsCreate">Crea nuovo</a>
+        </li>
+      </ul>
+    </li>
+    
+    <li ui-sref-active="active">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="pull-right up"></i>
+        <i class="icon material-icons i-20 cl-sun">wb_incandescent</i>
+        <span class="font-normal">Tutorial</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="app.tutorials">Visualizza tutti</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="app.tutorialsCreate">Crea nuovo</a>
+        </li>
+      </ul>
+    </li>
+    
+    <li ui-sref-active="active">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="pull-right up"></i>
+        <i class="icon material-icons i-20 cl-alizarin">next_week</i>
+        <span class="font-normal">Progetti</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="app.projects">Visualizza tutti</a>
+        </li>
+        <li ui-sref-active="active" ng-if="user.admin || user.moderator">
+          <a md-ink-ripple ui-sref="app.projectsCreate">Crea nuovo</a>
+        </li>
+        
+        <li ui-sref-active="active">
+          <a md-ink-ripple>
+            <span class="pull-right text-muted">
+              <i class="fa fa-caret-down"></i>
+            </span>
+            <i class="pull-right up"></i>
+            <span class="font-normal">Statistiche</span>
+          </a>
+          <ul class="nav nav-sub">
+            <li ui-sref-active="active">
+              <a md-ink-ripple ui-sref="app.projectsEffortStatics">Effort</a>
+            </li>
+            <li ui-sref-active="active">
+              <a md-ink-ripple ui-sref="app.projectsMetricStatics">Metric</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    
+    <li ui-sref-active="active" ui-sref="app.users">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+        </span>
+        <i class="pull-right up"></i>
+        <i class="icon material-icons i-20 cl-emerald">face</i>
+        <span class="font-normal">Utenti</span>
+      </a>
+    </li>
+    
+    <li ui-sref-active="active">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="icon material-icons i-20">settings</i>
+        <span class="font-normal">Impostazioni</span>
+      </a>
+      
+      <ul class="nav nav-sub" ng-if="cUser.admin || cUser.moderator">
+        <li ui-sref-active="active" ng-if="cUser.admin">
+          <a md-ink-ripple ui-sref="app.effort">Effort</a>
+        </li>
+        <li ui-sref-active="active" ng-if="cUser.admin">
+          <a md-ink-ripple ui-sref="app.metric">Metriche di size</a>
+        </li>
+        <li ui-sref-active="active" ng-if="cUser.admin">
+          <a md-ink-ripple ui-sref="app.tag">Tag</a>
+        </li>
+      </ul>
+    </li>
+    
+    <li ui-sref-active="active" ui-sref="app.adminValidation">
+      <a md-ink-ripple>
+        <i class="pull-right up"><b class="badge no-bg">{{count}}</b></i>
+        <i class="icon material-icons i-20">done_all</i>
+        <span class="font-normal">Valida</span>
+      </a>
+    </li>
+    
+  </ul>
+</nav>

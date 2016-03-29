@@ -1,0 +1,62 @@
+  <div class="box">
+    
+    <!--<div class="p p-h-md">
+      <a data-dismiss="modal" class="pull-right text-muted-lt text-2x m-t-n inline p-sm">&times;</a>
+      <strong>Profilo</strong>
+    </div>-->
+    
+    <md-toolbar class="bg-emerald">
+      <div class="md-toolbar-tools">
+        <h2 class="md-flex">Profilo</h2>
+        <span flex></span>
+        <i data-dismiss="modal" class="button-pointer icon material-icons i-20">clear</i>
+      </div>
+    </md-toolbar>
+    
+    <div class="md-padding">
+      <h3 class="font-bold">{{user.name}} {{user.lastName}}</h3>
+      <h5>{{user.email}}</h5>
+    </div>
+    
+    <nav ui-nav>
+      <ul class="nav">
+        
+        <li>
+          <a md-ink-ripple ui-sref="app.usersShow({id: user._id})">
+            <i class="icon material-icons i-24">account_box</i>
+            <span class="font-normal">Profilo personale</span>
+          </a>
+        </li>
+        
+        <!--<li>
+          <a md-ink-ripple ui-sref="app.usersEdit({id: user._id})">
+            <i class="icon material-icons i-24">settings</i>
+            <span class="font-normal">Impostazioni</span>
+          </a>
+        </li>-->
+        
+        <!--<li>
+          <a md-ink-ripple ng-if="user.admin || user.moderator" ui-sref="app.adminValidation">
+            <i class="icon material-icons i-24">done_all</i>
+            <i class="pull-right up"><b class="badge no-bg">{{count}}</b></i>
+            <span class="font-normal">Valida</span>
+          </a>
+        </li>-->
+        
+        <li ng-click="logout()" class="bg-alizarin cl-clouds">
+          <a md-ink-ripple>
+            <i class="icon material-icons i-24">exit_to_app</i>
+            <span class="font-normal">Logout</span>
+          </a>
+        </li>
+              
+      </ul>
+    </nav>
+    
+    <md-divider></md-divider>
+    <!--<div class="p-h-md m-t p-v-xs">Notifiche</div>-->
+    <!--<a data-toggle="modal" data-target="#chat" data-dismiss="modal"  class="list-group-item p-h-md">
+        <i class="fa fa-circle text-success text-xs m-r-xs"></i>
+        <span>Jonathan Morina</span>
+    </a>-->
+</div>
