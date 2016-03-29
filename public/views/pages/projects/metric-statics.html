@@ -1,0 +1,32 @@
+<section ng-repeat="item in metrics" style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+  
+  <md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">{{item.name}}</h2>
+    </div>
+  </md-toolbar>
+  
+  <md-content class="md-padding">
+    			
+		<table class="table table-bordered table-hover table-condensed bg-white" ng-if="item.projects.length">
+	    <tr style="font-weight: bold; text-align: center;">
+	      <td style="width:70%">Metrica</td>
+	      <td style="width:30%">Valore</td>
+	    </tr>
+	    <tr ng-repeat="eff in item.projects">
+	      <td style="vertical-align: middle;">
+	        <span>{{ eff.projectTitle }}</span>
+	      </td>
+	      <td style="vertical-align: middle;">
+		      <span>{{ eff.value }}</span>
+	      </td>
+	    </tr>
+	  </table>
+	  
+	  <span layout="row" layout-align="center center" ng-if="!item.projects.length">
+	  	<strong>Nessun Progetto Ha Inserito Valori Per Questa Metrica Di Size</strong>
+	  </span>
+  
+  </md-content>
+    
+</section>

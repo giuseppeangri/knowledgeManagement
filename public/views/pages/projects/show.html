@@ -1,0 +1,244 @@
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+	
+	<md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Informazioni Progetto</h2>
+    </div>
+  </md-toolbar>
+  
+	<md-content class="md-padding">
+	
+		<div class="md-list md-whiteframe-z0 bg-white m-b">
+			
+      <div class="md-list-item">
+        <div class="md-list-item-content">
+          <p><small class="font-thin">Titolo</small></p>
+          <h3 class="text-md">{{project.title}}</h3>
+        </div>
+      </div>
+    
+      <div class="md-list-item" ng-if="project.description">
+        <div class="md-list-item-content">
+          <p><small class="font-thin">Descrizione</small></p>
+          <h3 class="text-md">{{project.description}}</h3>
+        </div>
+      </div>
+    
+      <div class="md-list-item" ng-if="project.lifeModel">
+        <div class="md-list-item-content">
+          <p><small class="font-thin">Modello Ciclo di Vita</small></p>
+          <h3 class="text-md">{{project.lifeModel}}</h3>
+        </div>
+      </div>
+      
+      <div class="md-list-item" ng-if="project.tags.length">
+	      <div class="md-list-item-content">
+          <p><small class="font-thin">Tag</small></p>
+	        <md-chips ng-model="selectedTags" readonly="true">
+			      <md-chip-template>
+			        <span>
+			          <strong>{{$chip.title}}</strong>
+			        </span>
+			      </md-chip-template>
+			    </md-chips>
+        </div>
+      </div>
+      
+    </div>
+	
+</section>
+	
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+	
+	<md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Project Managers</h2>
+    </div>
+  </md-toolbar>
+  
+  <md-content class="md-padding">
+					
+		<div class="md-list md-whiteframe-z0 bg-white m-b" ng-if="project.projectManagers.length">
+      <div class="md-list-item" ng-repeat="user in project.projectManagers">
+        <div class="md-list-item-left circle bg-asphalt">
+	        <i class="icon material-icons i-24 cl-clouds">perm_identity</i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">{{user.obj.name}} {{user.obj.lastName}}</h3>
+          <small class="font-thin">{{user.obj.email}}</small>
+        </div>
+      </div>
+    </div>
+    
+    <span layout="row" layout-align="center center" ng-if="!project.projectManagers.length">
+	  	<strong>Nessun Project Manager Inserito</strong>
+	  </span>
+		
+  </md-content>
+  
+</section>
+
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+	
+	<md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Membri del Team</h2>
+    </div>
+  </md-toolbar>
+  
+  <md-content class="md-padding">
+					
+		<div class="md-list md-whiteframe-z0 bg-white m-b" ng-if="project.teamMembers.length">
+      <div class="md-list-item" ng-repeat="user in project.teamMembers">
+        <div class="md-list-item-left circle bg-asphalt">
+	        <i class="icon material-icons i-24 cl-clouds">perm_identity</i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">{{user.obj.name}} {{user.obj.lastName}}</h3>
+          <small class="font-thin">{{user.obj.email}}</small>
+        </div>
+      </div>
+    </div>
+    
+    <span layout="row" layout-align="center center" ng-if="!project.teamMembers.length">
+	  	<strong>Nessun Membro Inserito</strong>
+	  </span>
+		
+  </md-content>
+  
+</section>
+
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+	
+	<md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Documenti Progetto</h2>
+    </div>
+  </md-toolbar>
+
+	<md-content class="md-padding">
+	
+		<div class="md-list md-whiteframe-z0 bg-white m-b">
+      <div class="md-list-item" ng-repeat="document in project.documents">
+	      <a href="{{document.documentUrl}}">
+		      <div class="md-list-item-left circle bg-emerald">
+		        <i class="icon material-icons i-24 cl-clouds">file_download</i>
+	        </div>
+        </a>
+        <div class="md-list-item-content">
+          <p><small class="font-thin">{{document.date | date:'dd-MM-yyyy HH:mm'}}</small></p>
+          <h3 class="text-md">{{document.title}}</h3>
+        </div>
+      </div>
+    </div>
+	
+		<span layout="row" layout-align="center center" ng-if="!project.documents.length">
+	  	<strong>Nessun Documento Inserito</strong>
+	  </span>
+  
+  </md-content>
+  
+ </section>
+
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+	
+	<md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Strumenti Utilizzati</h2>
+    </div>
+  </md-toolbar>
+
+	<md-content class="md-padding">
+					
+		<div class="md-list md-whiteframe-z0 bg-white m-b" ng-if="project.tools.length">
+      <div class="md-list-item" ng-repeat="tool in project.tools">
+        <div class="md-list-item-left circle bg-asphalt">
+	        <i class="icon material-icons i-24 cl-clouds">build</i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">{{tool.obj.title}}</h3>
+          <small class="font-thin">{{tool.obj.description}}</small>
+        </div>
+      </div>
+    </div>
+    
+    <span layout="row" layout-align="center center" ng-if="!project.tools.length">
+	  	<strong>Nessuno Strumento Inserito</strong>
+	  </span>
+  
+  </md-content>
+  
+ </section>	  
+ 
+ <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+	
+	<md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Effort</h2>
+    </div>
+  </md-toolbar>
+
+	<md-content class="md-padding">
+    			
+		<table class="table table-bordered table-hover table-condensed bg-white" ng-if="project.efforts.length">
+	    <tr style="font-weight: bold; text-align: center;">
+	      <td style="width:70%">Fase</td>
+	      <td style="width:30%">Valore</td>
+	    </tr>
+	    <tr ng-repeat="effort in project.efforts">
+	      <td style="vertical-align: middle;">
+	        <span>{{ effort.type }}</span>
+	      </td>
+	      <td style="vertical-align: middle;">
+		      <span>{{effort.value}}</span>
+	      </td>
+	    </tr>
+	  </table>
+	  
+	  <span layout="row" layout-align="center center" ng-if="!project.efforts.length">
+	  	<strong>Nessuna Fase Inserita</strong>
+	  </span>
+  
+  </md-content>
+  
+ </section>
+ 
+ <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+	
+	<md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Metriche di Size</h2>
+    </div>
+  </md-toolbar>
+
+	<md-content class="md-padding">
+    			
+		<table class="table table-bordered table-hover table-condensed bg-white" ng-if="project.metrics.length">
+	    <tr style="font-weight: bold; text-align: center;">
+	      <td style="width:70%">Metrica</td>
+	      <td style="width:30%">Valore</td>
+	    </tr>
+	    <tr ng-repeat="metric in project.metrics">
+	      <td style="vertical-align: middle;">
+	        <span>{{ metric.type }}</span>
+	      </td>
+	      <td style="vertical-align: middle;">
+		      <span>{{metric.value}}</span>
+	      </td>
+	    </tr>
+	  </table>
+	  
+	  <span layout="row" layout-align="center center" ng-if="!project.metrics.length">
+	  	<strong>Nessuna Metrica Inserita</strong>
+	  </span>
+  
+  </md-content>
+  
+  <md-button class="md-fab md-fab-bottom-right left bg-river" aria-label="Salva" style="position: fixed;" ui-sref="app.projectsEdit({id: project._id})" ng-if="editable || user.admin || user.moderator">
+    <i class="icon material-icons i-24">edit</i>
+    <md-tooltip md-visible="true" md-direction="left">
+      Modifica
+    </md-tooltip>
+  </md-button>
+  
+ </section>

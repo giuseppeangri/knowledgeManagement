@@ -1,0 +1,478 @@
+<form name="newProject" class="form-horizontal m-t">
+	
+	<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+		
+		<md-toolbar class="bg-asphalt">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Informazioni Progetto</h2>
+	    </div>
+	  </md-toolbar>
+	  
+		<md-content class="md-padding">
+				
+		  <!-- title -->
+		  <md-input-container class="md-block input-form" style="width: 100%;">
+		    <label class="input-label">Titolo</label>
+		    <input md-maxlength="100" required name="title" ng-model="project.title" />
+		    <div ng-messages="newProject.title.$error">
+		      <div ng-message="required">Questo campo &egrave; richiesto</div>
+		      <div ng-message="md-maxlength">Il titolo deve avere meno di 100 caratteri</div>
+		    </div>
+		  </md-input-container>
+		  
+		  <!-- description -->
+		  <md-input-container class="md-block input-form" style="width: 100%;">
+		    <label class="input-label">Descrizione</label>
+		    <input md-maxlength="300" name="description" ng-model="project.description" />
+		    <div ng-messages="newProject.description.$error">
+		      <div ng-message="md-maxlength">La descrizione deve avere meno di 300 caratteri</div>
+		    </div>
+		  </md-input-container>
+		  
+		  <!-- lifeMode -->
+		  <md-input-container class="md-block input-form" style="width: 100%;">
+		    <label class="input-label">Modello Ciclo di Vita</label>
+		    <input md-maxlength="100" name="lifeModel" ng-model="project.lifeModel" />
+		    <div ng-messages="newProject.lifeModel.$error">
+		      <div ng-message="md-maxlength">La descrizione deve avere meno di 100 caratteri</div>
+		    </div>
+		  </md-input-container>
+		  
+		  <!-- tags -->
+		  <md-chips ng-model="selectedTags" md-autocomplete-snap
+						  md-transform-chip="ProjectsEditCtrl.transformChip($chip)"
+              md-on-add="ProjectsEditCtrl.addTag($chip)"
+		          md-on-remove="ProjectsEditCtrl.removeTag($chip)"
+              md-require-match="false">
+	      <md-autocomplete
+	          md-selected-item="selectedItemTag"
+	          md-search-text="searchTextTag"
+	          md-selected-item-change=""
+	          md-search-text-change=""
+	          md-items="tag in ProjectsEditCtrl.searchTags(searchTextTag)"
+	          md-min-length="1"
+					  md-autofocus="false"
+					  md-autoselect="false"
+	          md-item-text="tag.title"
+	          placeholder="Cerca un tag">
+	        <span md-highlight-text="searchTextTag">{{tag.title}}</span>
+	      </md-autocomplete>
+	      <md-chip-template>
+	        <span>
+	          <strong>{{$chip.title}}</strong>
+	        </span>
+	      </md-chip-template>
+	    </md-chips>
+		  
+		</md-content>
+		
+	</section>
+		
+	<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;" ng-if="user.admin || user.moderator">
+		
+		<md-toolbar class="bg-asphalt">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Project Managers</h2>
+	    </div>
+	  </md-toolbar>
+	  
+	  <md-content class="md-padding">
+		  <md-autocomplete
+			  md-selected-item="selectedItemPM"
+			  md-search-text="searchTextPM"
+			  md-selected-item-change="ProjectsEditCtrl.addUser(selectedItemPM, true)"
+			  md-search-text-change="" 
+			  md-items="user in ProjectsEditCtrl.searchUsers(searchTextPM)"
+			  md-min-length="1"
+			  md-autofocus="false"
+			  md-autoselect="false"
+			  md-floating-label="Cerca Utenti"
+			>
+				<md-item-template>
+				  <span md-highlight-text="searchTextPM" md-highlight-flags="^i">{{user.name}} {{user.lastName}}</span>
+				</md-item-template>
+				<md-not-found>
+				  Nessun Utente trovato per: "{{searchTextPM}}"
+				</md-not-found>
+			</md-autocomplete>
+						
+			<div class="md-list md-whiteframe-z0 bg-white m-b">
+	      <div class="md-list-item" ng-repeat="user in project.projectManagers">
+	        <div class="md-list-item-left circle bg-alizarin" ng-click="ProjectsEditCtrl.removeUser(user, true)">
+		        <i class="icon material-icons i-24 cl-clouds">delete</i>
+	        </div>
+	        <div class="md-list-item-left circle bg-asphalt">
+		        <i class="icon material-icons i-24 cl-clouds">perm_identity</i>
+	        </div>
+	        <div class="md-list-item-content">
+	          <h3 class="text-md">{{user.obj.name}} {{user.obj.lastName}}</h3>
+	          <small class="font-thin">{{user.obj.email}}</small>
+	        </div>
+	      </div>
+      </div>
+			
+	  </md-content>
+	  
+	</section>
+	
+	<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;" ng-if="user.admin || user.moderator">
+		
+		<md-toolbar class="bg-asphalt">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Membri del Team</h2>
+	    </div>
+	  </md-toolbar>
+	  
+	  <md-content class="md-padding">
+		  <md-autocomplete
+			  md-selected-item="selectedItemTM"
+			  md-search-text="searchTextTM"
+			  md-selected-item-change="ProjectsEditCtrl.addUser(selectedItemTM, false)"
+			  md-search-text-change="" 
+			  md-items="user in ProjectsEditCtrl.searchUsers(searchTextTM)"
+			  md-min-length="1"
+			  md-autofocus="false"
+			  md-autoselect="false"
+			  md-floating-label="Cerca Utenti"
+			>
+				<md-item-template>
+				  <span md-highlight-text="searchTextTM" md-highlight-flags="^i">{{user.name}} {{user.lastName}}</span>
+				</md-item-template>
+				<md-not-found>
+				  Nessun Utente trovato per: "{{searchTextTM}}"
+				</md-not-found>
+			</md-autocomplete>
+						
+			<div class="md-list md-whiteframe-z0 bg-white m-b">
+	      <div class="md-list-item" ng-repeat="user in project.teamMembers">
+	        <div class="md-list-item-left circle bg-alizarin" ng-click="ProjectsEditCtrl.removeUser(user, false)">
+		        <i class="icon material-icons i-24 cl-clouds">delete</i>
+	        </div>
+	        <div class="md-list-item-left circle bg-asphalt">
+		        <i class="icon material-icons i-24 cl-clouds">perm_identity</i>
+	        </div>
+	        <div class="md-list-item-content">
+	          <h3 class="text-md">{{user.obj.name}} {{user.obj.lastName}}</h3>
+	          <small class="font-thin">{{user.obj.email}}</small>
+	        </div>
+	      </div>
+      </div>
+			
+	  </md-content>
+	  
+	</section>
+  
+  <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+		
+		<md-toolbar class="bg-asphalt">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Documenti Progetto</h2>
+	    </div>
+	  </md-toolbar>
+  
+		<md-content class="md-padding">
+		
+			<div class="md-list md-whiteframe-z0 bg-white m-b">
+	      <div class="md-list-item" ng-repeat="document in project.documents">
+		      
+	        <div class="md-list-item-left circle bg-alizarin" ng-click="ProjectsEditCtrl.removeDocument(document)">
+		        <i class="icon material-icons i-24 cl-clouds">delete</i>
+	        </div>
+	        <a href="{{document.documentUrl}}">
+			      <div class="md-list-item-left circle bg-emerald">
+			        <i class="icon material-icons i-24 cl-clouds">file_download</i>
+		        </div>
+	        </a>
+<!--
+		      <a href="{{document.documentUrl}}">
+			      <div class="md-list-item-left circle bg-emerald">
+			        <i class="icon material-icons i-24 cl-clouds">file_download</i>
+		        </div>
+	        </a>
+	        <div class="md-list-item-left circle bg-alizarin" ng-click="ProjectsEditCtrl.removeDocument(document)" style="margin-right: 0;">
+		        <i class="icon material-icons i-24 cl-clouds">delete</i>
+	        </div>
+-->
+	        <div class="md-list-item-content">
+	          <p><small class="font-thin">{{document.date | date:'dd-MM-yyyy HH:mm'}}</small></p>
+	          <h3 class="text-md">{{document.title}}</h3>
+	        </div>
+	      </div>
+	    </div>
+		
+			<span layout="row" layout-align="center center" ng-if="!project.documents.length">
+		  	<strong>Nessun Documento Inserito</strong>
+		  </span>
+		  
+			<form name="newFile">
+			  <md-input-container class="md-block input-form" style="width: 100%;">
+			    <label class="input-label">Titolo Documento</label>
+			    <input md-maxlength="100" required name="documentTitle" ng-model="documentTitle" />
+			    <div ng-messages="newFile.documentTitle.$error">
+			      <div ng-message="required">Questo campo &egrave; richiesto</div>
+			      <div ng-message="md-maxlength">Il titolo deve avere meno di 100 caratteri</div>
+			    </div>
+			  </md-input-container>
+			</form>
+			<div class="box" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+        <div class="col-md-3">
+          <div class="p-md">
+            <div ng-show="uploader.isHTML5" class="m-b-md">
+              <!-- 3. nv-file-over uploader="link" over-class="className" -->
+              <div class="b-a b-dashed p-lg bg-white text-center m-b" nv-file-over="" over-class="b-info" uploader="uploader">
+                Drag & Drop zone
+              </div>
+              <!-- Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" -->
+            </div>
+    
+            <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+            <p>File multipli</p>
+            <input type="file" nv-file-select="" uploader="uploader" multiple  />
+    
+            <p class="m-t-md">Singolo file</p>
+            <input name="file" type="file" nv-file-select="" uploader="uploader" />
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="p-md">
+            <div class="m-b"><b class="badge bg-info pos-rlt m-r-xs"><i class="arrow right b-info pull-in"></i>{{ uploader.queue.length }}</b> file(s)</div>
+            <table class="table bg-white b-a">
+              <thead>
+                <tr>
+                  <th width="50%">Nome</th>
+                  <th ng-show="uploader.isHTML5">Dimensione</th>
+                  <th ng-show="uploader.isHTML5">Progresso</th>
+                  <th>Stato</th>
+                  <th>Azioni</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in uploader.queue">
+                  <td><strong>{{ item.file.name }}</strong></td>
+                  <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                  <td ng-show="uploader.isHTML5">
+                    <div class="progress progress-sm no-margin m-t-xs">
+                      <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+                  </td>
+                  <td nowrap>
+                    <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        Carica
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                        Cancella
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
+                        Rimuovi
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div>
+              <div>
+                <p>Progresso Coda:</p>
+                <div class="progress bg-light dker" style="">
+                  <div class="progress-bar progress-bar-striped bg-info" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-addon btn-info" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                <i class="fa fa-cloud-upload"></i> Carica tutti
+              </button>
+              <button type="button" class="btn btn-addon btn-default" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                <i class="fa fa-ban"></i> Cancella tutti
+              </button>
+              <button type="button" class="btn btn-addon btn-default" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                <i class="fa fa-times"></i> Rimuovi tutti
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+	  
+	  </md-content>
+	  
+	 </section>
+  
+	<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+		
+		<md-toolbar class="bg-asphalt">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Strumenti Utilizzati</h2>
+	    </div>
+	  </md-toolbar>
+  
+		<md-content class="md-padding">
+		
+			<md-autocomplete
+			  md-selected-item="selectedItemTool"
+			  md-search-text="searchTextTool"
+			  md-selected-item-change="ProjectsEditCtrl.addTool(selectedItemTool)"
+			  md-search-text-change=""
+			  md-items="tool in ProjectsEditCtrl.searchTools(searchTextTM)"
+			  md-min-length="1"
+			  md-autofocus="false"
+			  md-autoselect="false"
+			  md-floating-label="Cerca Strumenti"
+			>
+				<md-item-template>
+				  <span md-highlight-text="searchTextTool" md-highlight-flags="^i">{{tool.title}}</span>
+				</md-item-template>
+				<md-not-found>
+				  Nessuno Strumento trovato per: "{{searchTextTool}}"
+				</md-not-found>
+			</md-autocomplete>
+						
+			<div class="md-list md-whiteframe-z0 bg-white m-b">
+	      <div class="md-list-item" ng-repeat="tool in project.tools">
+	        <div class="md-list-item-left circle bg-alizarin" ng-click="ProjectsEditCtrl.removeTool(tool)">
+		        <i class="icon material-icons i-24 cl-clouds">delete</i>
+	        </div>
+	        <div class="md-list-item-left circle bg-asphalt">
+		        <i class="icon material-icons i-24 cl-clouds">build</i>
+	        </div>
+	        <div class="md-list-item-content">
+	          <h3 class="text-md">{{tool.obj.title}}</h3>
+	          <small class="font-thin">{{tool.obj.description}}</small>
+	        </div>
+	      </div>
+      </div>
+	  
+	  </md-content>
+	  
+	 </section>	  
+	 
+	 <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+		
+		<md-toolbar class="bg-asphalt">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Effort</h2>
+	    </div>
+	  </md-toolbar>
+  
+		<md-content class="md-padding">
+						
+			<ui-select ng-model="selected.effort" theme="bootstrap" ng-change="ProjectsEditCtrl.addEffort(selected.effort.title)">
+        <ui-select-match placeholder="Seleziona una Fase del Progetto">{{$select.selected.title}}</ui-select-match>
+        <ui-select-choices repeat="effort in efforts | filter: $select.search">
+          <div ng-bind-html="effort.title | highlight: $select.search"></div>
+          <small ng-bind-html="effort.description | highlight: $select.search"></small>
+        </ui-select-choices>
+      </ui-select>
+      			
+			<table class="table table-bordered table-hover table-condensed bg-white" style="margin-top: 5%;">
+		    <tr style="font-weight: bold; text-align: center;">
+		      <td style="width:70%">Fase</td>
+		      <td style="width:30%">Valore</td>
+		      <td></td>
+		    </tr>
+		    <tr ng-repeat="effort in project.efforts">
+		      <td style="vertical-align: middle;">
+		        <span>{{ effort.type }}</span>
+		      </td>
+		      <td style="vertical-align: middle;">
+			      <input type="text" ng-model="effort.value" style="width: 100%;" />
+		      </td>
+		      <td style="vertical-align: middle; padding: 10px;">
+		        <div class="md-list-item-left circle bg-alizarin" ng-click="ProjectsEditCtrl.removeEffort(effort)" style="margin-right: 0;">
+			        <i class="icon material-icons i-24 cl-clouds">delete</i>
+		        </div>
+		      </td>
+		    </tr>
+		    <tr style="background-color: #f5f5f5;">
+			    <td>
+				    <input type="text" ng-model="newEffortType" style="width: 100%;" />
+			    </td>
+			    <td>
+				    <input type="text" ng-model="newEffortValue" style="width: 100%;" />
+			    </td>
+			    <td style="vertical-align: middle; padding: 10px;">
+				    <div class="md-list-item-left circle bg-emerald" ng-click="ProjectsEditCtrl.addEffort(newEffortType, newEffortValue)" style="margin-right: 0;">
+			        <i class="icon material-icons i-24 cl-clouds">add</i>
+		        </div>
+			    </td>
+		    </tr>
+		  </table>
+	  
+	  </md-content>
+	  
+	 </section>
+	 
+	 <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+		
+		<md-toolbar class="bg-asphalt">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Metriche di Size</h2>
+	    </div>
+	  </md-toolbar>
+  
+		<md-content class="md-padding">
+		
+			<ui-select ng-model="selected.metric" theme="bootstrap" ng-change="ProjectsEditCtrl.addMetric(selected.metric.title)">
+        <ui-select-match placeholder="Seleziona una Metrica di Size">{{$select.selected.title}}</ui-select-match>
+        <ui-select-choices repeat="metric in metrics | filter: $select.search">
+          <div ng-bind-html="metric.title | highlight: $select.search"></div>
+          <small ng-bind-html="metric.description | highlight: $select.search"></small>
+        </ui-select-choices>
+      </ui-select>
+      			
+			<table class="table table-bordered table-hover table-condensed bg-white" style="margin-top: 5%;">
+		    <tr style="font-weight: bold; text-align: center;">
+		      <td style="width:70%">Metrica</td>
+		      <td style="width:30%">Valore</td>
+		      <td></td>
+		    </tr>
+		    <tr ng-repeat="metric in project.metrics">
+		      <td style="vertical-align: middle;">
+		        <span>{{ metric.type }}</span>
+		      </td>
+		      <td style="vertical-align: middle;">
+			      <input type="text" ng-model="metric.value" style="width: 100%;" />
+		      </td>
+		      <td style="vertical-align: middle; padding: 10px;">
+		        <div class="md-list-item-left circle bg-alizarin" ng-click="ProjectsEditCtrl.removeMetric(metric)" style="margin-right: 0;">
+			        <i class="icon material-icons i-24 cl-clouds">delete</i>
+		        </div>
+		      </td>
+		    </tr>
+		    <tr style="background-color: #f5f5f5;">
+			    <td>
+				    <input type="text" ng-model="newMetricType" style="width: 100%;" />
+			    </td>
+			    <td>
+				    <input type="text" ng-model="newMetricValue" style="width: 100%;" />
+			    </td>
+			    <td style="vertical-align: middle; padding: 10px;">
+				    <div class="md-list-item-left circle bg-emerald" ng-click="ProjectsEditCtrl.addMetric(newMetricType, newMetricValue)" style="margin-right: 0;">
+			        <i class="icon material-icons i-24 cl-clouds">add</i>
+		        </div>
+			    </td>
+		    </tr>
+		  </table>
+	  
+	  </md-content>
+	  
+	 </section>
+  
+  <div layout="row" style="position: fixed; bottom: 2%; right: 2%;">
+    <span flex></span>
+    <md-button class="md-fab left bg-emerald" aria-label="Salva" ng-click="ProjectsEditCtrl.update()">
+      <i class="icon material-icons i-24">save</i>
+      <md-tooltip md-visible="true" md-direction="top">
+        Salva
+      </md-tooltip>
+    </md-button>
+    <md-button class="md-fab left bg-alizarin" aria-label="Elimina" ng-click="ProjectsEditCtrl.remove()">
+      <i class="icon material-icons i-24">delete</i>
+      <md-tooltip md-visible="true" md-direction="top">
+        Elimina
+      </md-tooltip>
+    </md-button>
+  </div>
+
+</form>

@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-sm-4" ng-repeat="project in projects">
+    <div class="panel panel-card">
+      <div class="item">
+        <div class="index-card bg-asphalt-tr">
+          <i class="icon material-icons i-20 index-icon cl-alizarin">next_week</i>
+        </div>
+        <div class="bottom text-white p">
+          {{project.author.name}} {{project.author.lastName}}
+        </div>
+      </div>
+      <div class="p">
+        <a ui-sref="app.projectsShow({id: project._id})"><h3>{{project.title}}</h3></a>
+        <p>
+          {{project.description | limitTo: 190}}
+          {{project.description.lenght ? '...' : ''}}
+        </p>
+        <div ng-if="!project.description">
+	        <p>Nessuna Descrizione inserita</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
