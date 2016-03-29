@@ -1,0 +1,174 @@
+.main-content {
+  width: 85%;
+  position: absolute;
+  left: 7.5%;
+  padding-top: 64px;
+  color: #5f5f5f;
+  margin: 20px;
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);
+  padding: 20px;
+}
+
+.title {
+  color: #222;
+  font-weight: 500;
+  line-height: normal;  
+}
+
+.sub-title {
+  display: block;
+  margin-top: 5px;
+  font-size: 85%;
+  color: #546e7a;
+  position: relative;
+  top: -13px;
+}
+
+.comments {
+  padding-top: 64px;
+}
+
+.card-comment {
+  padding: 20px;
+  background-color: #fafafa;
+  margin-top: 3em;
+  margin-bottom: 3em;
+  border-radius: 2px;
+  font-size: 14px;
+  /*width: 80%;*/
+}
+
+.article-text {
+  margin-top: 24px; 
+  min-height: 400px;
+}
+
+.article-description-text {
+  margin-top: 24px;
+  min-height: 150px;
+  font-size: 1.5em;
+}
+
+.input-label {
+  color: black;
+  font-style: 2em;
+}
+
+md-input-container.input-form {
+  width: 70%;
+  margin-left: auto;
+  color: black;
+  margin-right: auto;
+}
+
+/* Base */
+.bg-asphalt {
+  background-color: rgba(52, 73, 94, 1) !important;
+}
+.bg-asphalt-tr {
+  background-color: rgba(52, 73, 94, 0.8) !important;
+}
+.cl-asphalt {
+  color: #3d566e !important;
+}
+
+/* Articoli */
+.bg-clouds {
+	background-color: #ecf0f1;
+}
+.cl-clouds {
+  color: #ecf0f1;
+}
+
+/* Template */
+.bg-emerald {
+  background-color: rgba(46, 204, 113, 1) !important;
+}
+.cl-emerald {
+  color: #2ecc71 !important;
+}
+
+/* Strumenti */
+.bg-river {
+  background-color: rgba(74, 163, 223, 1) !important;
+}
+.cl-river {
+  color: #4aa3df !important;
+}
+
+/* Tutorial */
+.bg-sun {
+  background-color: rgba(241, 196, 15, 1) !important;
+}
+.cl-sun {
+  color: #f1c40f !important;
+}
+
+/* Progetti */
+.bg-alizarin {
+  background-color: rgba(231, 76, 60, 1) !important;
+}
+.cl-alizarin {
+  color: #e74c3c !important;
+}
+
+.index-card {
+  height: 220px; 
+  padding: 4%;
+}
+.index-icon {
+  font-size: 11em;
+  position: absolute;
+  color: #ecf0f1;
+}
+
+.choice {
+  width: 50%;
+  position: absolute;
+  left: 28.5%;
+  top: 25%;
+}
+
+.choice-button {
+  height: 250px;
+  width: 250px;
+}
+
+.choice-icon {
+  display: block;
+  font-size: 9em;
+  color: #ecf0f1;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.choice-label {
+  font-size: 2em;
+  color: #ecf0f1;
+}
+
+.content-box {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  margin-top: 50px;
+}
+
+.active.bg-asphalt {
+	background-color: rgba(52, 73, 94, 1) !important;
+}
+
+.button-pointer:hover {
+  cursor: pointer;
+}
+
+md-toast * {
+  background-color: rgba(46, 204, 113, 1) !important;
+}
+
+.md-chips {
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+}
