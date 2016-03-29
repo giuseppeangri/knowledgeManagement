@@ -1,0 +1,25 @@
+{
+  "name": "kmgps",
+  "version": "1.0.0",
+  "description": "knowledge management web app",
+  "main": "server.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha tests/test.js"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "supertest": "*"
+  },
+  "dependencies": {
+    "basic-auth": "*",
+    "bcrypt-nodejs": "*",
+    "body-parser": "*",
+    "express": "*",
+    "express-mongoose-docs": "*",
+    "express-restify-mongoose": "*",
+    "mongoose": "*",
+    "morgan": "*",
+    "formidable": "*",
+    "emailjs": "*"
+  }
+}
