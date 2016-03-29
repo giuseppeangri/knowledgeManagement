@@ -1,0 +1,81 @@
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+  
+  <md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Contenuti in attesa di essere validati</h2>
+    </div>
+  </md-toolbar>
+  
+  <md-content class="md-padding">
+    
+    <div class="md-list md-whiteframe-z0 bg-white m-b" ng-if="invalidContents.length">
+      <div class="md-list-item" ng-repeat="element in invalidContents | orderBy: element.date">
+        
+        <div class="md-list-item-left circle bg-alizarin" ng-click="AdminCtrl.removeContent(element)">
+          <i class="icon material-icons i-24 cl-clouds">delete</i>
+        </div>
+        
+        <div class="md-list-item-left circle bg-emerald" ng-click="AdminCtrl.acceptContent(element)">
+          <i class="icon material-icons i-24 cl-clouds">done</i>
+        </div>
+        
+        <div ng-if="element.type == 0" class="button-pointer md-list-item-left circle bg-river" ui-sref="app.articlesShow({id: element._id})">
+          <i class="icon material-icons i-24 cl-clouds">remove_red_eye</i>
+        </div>
+        <div ng-if="element.type == 1" class="button-pointer md-list-item-left circle bg-river" ui-sref="app.templatesShow({id: element._id})">
+          <i class="icon material-icons i-24 cl-clouds">remove_red_eye</i>
+        </div>
+        
+        <div class="md-list-item-content">
+          <h3 class="text-md">{{element.title}}</h3>
+          <small ng-if="element.type == 0" class="font-thin">Articolo</small>
+          <small ng-if="element.type == 1" class="font-thin">Template</small>
+        </div>
+        
+      </div>
+    </div>
+    
+    <span layout="row" layout-align="center center" ng-if="!invalidContents.length"">
+	  	<strong>Nessun Contenuto Deve Essere Validato</strong>
+	  </span>
+    
+  </md-content>
+    
+</section>
+
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+  
+  <md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Utenti in attesa di essere validati</h2>
+    </div>
+  </md-toolbar>
+  
+  <md-content class="md-padding">
+  
+    <div class="md-list md-whiteframe-z0 bg-white m-b" ng-if="invalidUsers.length">
+      <div class="md-list-item" ng-repeat="element in invalidUsers | orderBy: element.name">
+        
+        <div class="md-list-item-left circle bg-alizarin" ng-click="AdminCtrl.removeUser(element)">
+          <i class="icon material-icons i-24 cl-clouds">delete</i>
+        </div>
+        
+        <div class="md-list-item-left circle bg-emerald" ng-click="AdminCtrl.acceptUser(element)">
+          <i class="icon material-icons i-24 cl-clouds">done</i>
+        </div>
+        
+        <div class="md-list-item-content">
+          <h3 class="text-md">{{element.name}} {{element.lastName}}</h3>
+          <small class="font-thin">{{element.email}}</small>
+        </div>
+        
+      </div>
+    </div>
+    
+    <span layout="row" layout-align="center center" ng-if="!invalidUsers.length">
+	  	<strong>Nessun Utente Deve Essere Validato</strong>
+	  </span>
+    
+  </md-content>
+  
+</section>
