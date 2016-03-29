@@ -1,0 +1,74 @@
+<form name="editArticle" class="form-horizontal m-t">
+  <!-- title -->
+  <md-input-container class="md-block input-form">
+    <label class="input-label">Titolo</label>
+    <input md-maxlength="100" required name="title" ng-model="newArticle.title" />
+    <div ng-messages="newArticle.title.$error">
+      <div ng-message="required">Questo campo &egrave; richiesto</div>
+      <div ng-message="md-maxlength">Il titolo deve avere meno di 100 caratteri</div>
+    </div>
+  </md-input-container>
+  
+  <!-- description -->
+  <md-input-container class="md-block input-form">
+    <label class="input-label">Descrizione</label>
+    <textarea md-maxlength="300" name="description" ng-model="newArticle.description" rows="3" columns="3" ></textarea>
+    <div ng-messages="newArticle.description.$error">
+      <div ng-message="md-maxlength">La descrizione deve avere meno di 300 caratteri</div>
+    </div>
+  </md-input-container>
+  
+  <!-- tags -->
+  <md-chips ng-model="selectedTags" md-autocomplete-snap
+				  md-transform-chip="ArticlesEditCtrl.transformChip($chip)"
+          md-on-add="ArticlesEditCtrl.addTag($chip)"
+          md-on-remove="ArticlesEditCtrl.removeTag($chip)"
+          md-require-match="false">
+    <md-autocomplete
+        md-selected-item="selectedItemTag"
+        md-search-text="searchTextTag"
+        md-selected-item-change=""
+        md-search-text-change=""
+        md-items="tag in ArticlesEditCtrl.searchTags(searchTextTag)"
+        md-min-length="1"
+			  md-autofocus="false"
+			  md-autoselect="false"
+        md-item-text="tag.title"
+        placeholder="Cerca un tag">
+      <span md-highlight-text="searchTextTag">{{tag.title}}</span>
+    </md-autocomplete>
+    <md-chip-template>
+      <span>
+        <strong>{{$chip.title}}</strong>
+      </span>
+    </md-chip-template>
+  </md-chips>
+  
+  <!-- content -->
+  <md-input-container class="md-block input-form">
+      <span style="margin-top: 20px; margin-bottom: 5px;">Contenuto</span>
+    <div class="">
+      <div text-angular ng-model="newArticle.text" class="btn-groups"></div>
+    </div>
+  </md-input-container>
+  
+  <div layout="row" style="position: fixed; bottom: 2%; right: 2%;">
+    <span flex></span>
+    <md-button class="md-fab left bg-emerald" aria-label="Salva" ng-click="ArticlesEditCtrl.save()" 
+    ng-disabled=" article.title == newArticle.title && 
+                  article.description == newArticle.description && 
+                  article.text == newArticle.text && 
+                  !tagMod">
+      <i class="icon material-icons i-24">save</i>
+      <md-tooltip md-visible="true" md-direction="top">
+        Salva
+      </md-tooltip>
+    </md-button>
+    <md-button class="md-fab left bg-alizarin" aria-label="Elimina" ng-click="ArticlesEditCtrl.remove()">
+      <i class="icon material-icons i-24">delete</i>
+      <md-tooltip md-visible="true" md-direction="top">
+        Elimina
+      </md-tooltip>
+    </md-button>
+  </div>
+</form>

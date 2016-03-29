@@ -1,0 +1,91 @@
+<form name="newArticle" class="form-horizontal m-t">
+  
+  <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+    
+    <md-toolbar class="bg-asphalt">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Informazioni Articolo</h2>
+	    </div>
+	  </md-toolbar>
+    
+    <md-content class="md-padding">
+      
+      <!-- title -->
+      <md-input-container class="md-block input-form" style="width: 100%;">
+        <label class="input-label">Titolo</label>
+        <input md-maxlength="100" required name="title" ng-model="article.title" />
+        <div ng-messages="newArticle.title.$error">
+          <div ng-message="required">Questo campo &egrave; richiesto</div>
+          <div ng-message="md-maxlength">Il titolo deve avere meno di 100 caratteri</div>
+        </div>
+      </md-input-container>
+      
+      <!-- description -->
+      <md-input-container class="md-block input-form" style="width: 100%;">
+        <label class="input-label">Descrizione</label>
+        <textarea md-maxlength="300" name="description" ng-model="article.description" rows="3" columns="3" ></textarea>
+        <div ng-messages="newArticle.description.$error">
+          <div ng-message="md-maxlength">La descrizione deve avere meno di 300 caratteri</div>
+        </div>
+      </md-input-container>
+      
+      <!-- tags -->
+		  <md-chips ng-model="selectedTags" md-autocomplete-snap
+						  md-transform-chip="ArticlesCreateCtrl.transformChip($chip)"
+              md-on-add="ArticlesCreateCtrl.addTag($chip)"
+		          md-on-remove="ArticlesCreateCtrl.removeTag($chip)"
+              md-require-match="false">
+	      <md-autocomplete
+	          md-selected-item="selectedItemTag"
+	          md-search-text="searchTextTag"
+	          md-selected-item-change=""
+	          md-search-text-change=""
+	          md-items="tag in ArticlesCreateCtrl.searchTags(searchTextTag)"
+	          md-min-length="1"
+					  md-autofocus="false"
+					  md-autoselect="false"
+	          md-item-text="tag.title"
+	          placeholder="Cerca un tag">
+	        <span md-highlight-text="searchTextTag">{{tag.title}}</span>
+	      </md-autocomplete>
+	      <md-chip-template>
+	        <span>
+	          <strong>{{$chip.title}}</strong>
+	        </span>
+	      </md-chip-template>
+	    </md-chips>
+
+    </md-content>
+    
+  </section>
+  
+  <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+    
+    <md-toolbar class="bg-asphalt">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Contenuto Articolo</h2>
+	    </div>
+	  </md-toolbar>
+    
+    <md-content class="md-padding">
+      
+      <!-- text -->
+      <md-input-container class="md-block">
+        <div>
+          <div text-angular ng-model="article.text" class="btn-groups"></div>
+        </div>
+      </md-input-container>
+      
+    </md-content>
+    
+  </section>
+  
+  <md-button class="md-fab md-fab-bottom-right left bg-river" aria-label="Salva" style="position: fixed;" ng-click="ArticlesCreateCtrl.save()">
+    <!--<i class="mdi-editor-mode-edit i-24"></i>-->
+    <i class="icon material-icons i-24">save</i>
+    <md-tooltip md-visible="true" md-direction="left">
+      Salva
+    </md-tooltip>
+  </md-button>
+  
+</form>

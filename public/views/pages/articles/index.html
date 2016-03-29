@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-sm-4" ng-repeat="article in articles">
+    <div class="panel panel-card">
+      <div class="item">
+        <div class="index-card bg-asphalt-tr">
+          <i class="icon material-icons i-20 index-icon cl-clouds">subject</i>
+        </div>
+        <div class="bottom text-white p">
+          {{article.author.name}} {{article.author.lastName}}
+        </div>
+      </div>
+      <a ng-if="user._id == article.author || user.admin || user.moderator" md-ink-ripple ui-sref="app.articlesEdit({id: article._id})" class="md-btn md-raised md-fab brown m-r md-fab-offset pull-right">
+        <i style="margin-top: 9px;" class="material-icons">create</i>
+      </a>
+      <div class="p">
+        <a ui-sref="app.articlesShow({id: article._id})"><h3>{{article.title}}</h3></a>
+        <p>
+          {{article.description | limitTo: 190}}
+          {{article.description.lenght ? '...' : ''}}
+        </p>
+        <div ng-if="!article.description">
+	        <p>Nessuna Descrizione inserita</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
