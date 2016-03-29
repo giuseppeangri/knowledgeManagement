@@ -1,0 +1,117 @@
+
+<div style="width: 100%; height: auto; min-height: 100%; background-color: rgba(52,73,94,0.7); padding-top: 3%;">
+	
+	<div layout="row" layout-xs="column" layout-align="center center" style="width: 80%; margin-left: auto; margin-right: auto; ">
+	    <object id="logo" class="logo" type="image/svg+xml" data="images/logo.svg" style="width: 20%;"></object>
+	</div>
+
+	<div layout="row" layout-xs="column" layout-align="center center" style="width: 80%; margin-left: auto; margin-right: auto; margin-top: 3%;">
+		
+		<div class="panel md-whiteframe-z1" style="width: 50%; padding: 4%;">
+			
+			<div style="text-align: center; margin-bottom: 5%;">
+				<p style="font-size: larger;"><strong>Piattaforma di Knowledge Management</strong></p>
+				<p>per i Corsi di Gestione dei Progetti Software ed Ingegneria del Software</p>
+			</div>
+			
+			<div ng-if="!choice">
+				<button ng-click="AuthenticationCtrl.setChoice(1)" class="md-btn md-raised bg-asphalt cl-clouds btn-block p-h-md" style="height: 80px;">Accedi</button>
+				<button ng-click="AuthenticationCtrl.setChoice(2)" class="md-btn md-raised bg-asphalt cl-clouds btn-block p-h-md" style="height: 80px;">Richiedi Registrazione</button>
+			</div>
+			
+			<div ng-if="choice == 1" class="panel" style="padding: 4%; border-color: black;">
+				
+				<span>Inserisci le tue credenziali di accesso</span>
+				
+			  <form name="form" style="margin-top: 5%;">
+			    <div class="md-form-group float-label">
+			      <input type="text" class="md-input" ng-model="loginData.email" required>
+			      <label>Email</label>
+			    </div>
+			    <div class="md-form-group float-label">
+			      <input type="password" class="md-input" ng-model="loginData.password" required>
+			      <label>Password</label>
+			    </div>
+			    
+			    <div style="margin-top: 10%;">
+				    <button ng-click="AuthenticationCtrl.login()" _type="submit" class="md-btn md-raised bg-asphalt cl-clouds btn-block p-h-md">Accedi</button>
+				    <button md-ink-ripple ng-click="AuthenticationCtrl.setChoice(null)" class="md-btn md-raised pink btn-block p-h-md">Indietro</button>
+			    </div>
+			    
+			  </form>
+			  
+			</div>
+			
+			<div ng-if="choice == 2" class="panel" style="padding: 4%; border-color: black;">
+				
+				<span>Inserisci i campi richiesti</span>
+				
+			  <form name="form" style="margin-top: 5%;">
+	        
+				  <md-input-container class="md-form-group float-label" style="display: block;">
+			      <label>Nome</label>
+			      <input name="name" type="text" class="md-input" ng-model="signupData.name" required>
+	          <div ng-messages="form.name.$error">
+	            <div ng-message="required">Questo campo &egrave; richiesto</div>
+	          </div>
+			    </md-input-container>
+	        
+					<md-input-container class="md-form-group float-label" style="display: block;">
+			      <label>Cognome</label>
+			      <input name="lastName" type="text" class="md-input" ng-model="signupData.lastName" required>
+	          <div ng-messages="form.lastName.$error">
+	            <div ng-message="required">Questo campo &egrave; richiesto</div>
+	          </div>
+			    </md-input-container>
+	        
+			    <md-input-container class="md-form-group float-label" style="display: block;">
+			      <label>Matricola</label>
+			      <input name="serialNumber" type="text" class="md-input" ng-model="signupData.serialNumber" required>
+	          <div ng-messages="form.serialNumber.$error">
+	            <div ng-message="required">Questo campo &egrave; richiesto</div>
+	          </div>
+			    </md-input-container>
+	        
+			    <md-input-container class="md-form-group float-label" style="display: block;">
+			      <label>Data di Nascita</label>
+			      <input type="date" class="md-input" ng-model="signupData.dataBirth">
+			    </md-input-container>
+	        
+			    <md-input-container class="md-form-group float-label" style="display: block;">
+			      <label>Email</label>
+			      <input name="email" type="text" class="md-input" ng-model="signupData.email" required>
+	          <div ng-messages="form.email.$error">
+	            <div ng-message="required">Questo campo &egrave; richiesto</div>
+	          </div>
+			    </md-input-container>
+	        
+			    <md-input-container class="md-form-group float-label" style="display: block;">
+			      <label>Password</label>
+			      <input name="password" type="password" class="md-input" ng-model="signupData.password" required>
+	          <div ng-messages="form.password.$error">
+	            <div ng-message="required">Questo campo &egrave; richiesto</div>
+	          </div>
+			    </md-input-container>
+	        
+			    <md-input-container class="md-form-group float-label" style="display: block;">
+			      <label>Conferma Password</label>
+			      <input type="password" name="passwordConfirmation" class="md-input" ng-model="signupData.passwordConfirmation" required>
+	          <div ng-messages="form.passwordConfirmation.$error">
+		          <div ng-message="required">Questo campo &egrave; richiesto</div>
+	          </div>
+			    </md-input-container>
+	        
+	        <div style="margin-top: 10%;">
+				    <button md-ink-ripple ng-click="AuthenticationCtrl.signup()" _type="submit" class="md-btn md-raised bg-asphalt cl-clouds btn-block p-h-md">Registrati</button>
+				    <button md-ink-ripple ng-click="AuthenticationCtrl.setChoice(null)" class="md-btn md-raised pink btn-block p-h-md">Indietro</button>
+	        </div>
+	        
+			  </form>
+			  
+			</div>
+			
+		</div>
+		
+	</div>
+
+</div>

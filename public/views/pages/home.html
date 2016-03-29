@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-sm-4" ng-repeat="element in index | orderBy: element.date">
+    <div class="panel panel-card">
+      <div class="item">
+        
+        <div class="index-card bg-asphalt-tr" ng-if="element.type == 0">
+          <i class="icon material-icons i-20 index-icon cl-clouds">subject</i>
+        </div>
+        <div class="index-card bg-asphalt-tr" ng-if="element.type == 1">
+          <i class="icon material-icons i-20 index-icon cl-emerald">description</i>
+        </div>
+        <div class="index-card bg-asphalt-tr" ng-if="element.type == 2">
+          <i class="icon material-icons i-20 index-icon cl-river">build</i>
+        </div>
+        <div class="index-card bg-asphalt-tr" ng-if="element.type == 3">
+          <i class="icon material-icons i-20 index-icon cl-sun">wb_incandescent</i>
+        </div>
+        
+        <div class="bottom text-white p">
+          {{element.author.name}} {{element.author.lastName}}
+        </div>
+      </div>
+      <!--<a ng-if="currentUser.admin || currentUser.moderator || currentUser._id == element.author._id" md-ink-ripple class="md-btn md-raised md-fab brown m-r md-fab-offset pull-right">
+        <i style="margin-top: 9px;" class="material-icons">create</i>
+      </a>-->
+      <div class="p">
+        
+        <a ui-sref="app.articlesShow({id: element._id})" ng-if="element.type == 0"><h3>{{element.title}}</h3></a>
+        <a ui-sref="app.templatesShow({id: element._id})" ng-if="element.type == 1"><h3>{{element.title}}</h3></a>
+        <a ui-sref="app.toolsShow({id: element._id})" ng-if="element.type == 2"><h3>{{element.title}}</h3></a>
+        <a ui-sref="app.tutorialsShow({id: element._id})" ng-if="element.type == 3"><h3>{{element.title}}</h3></a>
+        
+        <p>
+          {{element.description | limitTo: 190}}
+          {{element.description.lenght ? '...' : ''}}
+        </p>
+        <div ng-if="!element.description">
+	        <p>Nessuna Descrizione inserita</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
