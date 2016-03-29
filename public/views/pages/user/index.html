@@ -1,0 +1,28 @@
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+  
+  <md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Utenti registrati alla piattaforma</h2>
+    </div>
+  </md-toolbar>
+  
+  <md-content class="md-padding">
+  
+    <div class="md-list md-whiteframe-z0 bg-white m-b">
+      <div class="md-list-item" ng-repeat="user in users">
+        
+        <div class="button-pointer md-list-item-left circle bg-river" ui-sref="app.usersShow({id: user._id})">
+          <i class="icon material-icons i-24 cl-clouds">remove_red_eye</i>
+        </div>
+                
+        <div class="md-list-item-content">
+          <h3 class="text-md">{{user.name}} {{user.lastName}}</h3>
+          <small class="font-thin">{{user.email}}</small>
+        </div>
+        
+      </div>
+    </div>
+    
+  </md-content>
+  
+</section>

@@ -1,0 +1,169 @@
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+  
+  <md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Informazioni Personali</h2>
+    </div>
+  </md-toolbar>
+  
+  <md-content >
+  
+    <div class="md-list">
+      
+      <div class="md-list-item">
+        <div class="md-list-item-content">
+          <h4>Nome:</h4><h5>{{user.name}}</h5>
+        </div>
+      </div>
+      <div class="md-list-item">
+        <div class="md-list-item-content">
+          <h4>Cognome:</h4><h5>{{user.lastName}}</h5>
+        </div>
+      </div>
+      <div class="md-list-item">
+        <div class="md-list-item-content">
+          <h4>Email:</h4><h5>{{user.email}}</h5>
+        </div>
+      </div>
+      <div class="md-list-item" ng-if="cUser._id == user._id">
+        <div class="md-list-item-content">
+          <h4>Matricola:</h4><h5>{{user.serialNumber}}</h5>
+        </div>
+      </div>
+      <div class="md-list-item" ng-if="user.dataBirth">
+        <div class="md-list-item-content">
+          <h4>Data di Nascita:</h4><h5>{{user.dataBirth | date:'dd-MM-yyyy'}}</h5>
+        </div>
+      </div>
+      
+    </div>
+  
+  </md-content>
+  
+</section>
+
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+  
+  <md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Contenuti personali sulla piattaforma</h2>
+    </div>
+  </md-toolbar>
+  
+  <md-content class="md-padding">
+  
+    <div ng-if="contents.length" class="md-list md-whiteframe-z0 bg-white m-b">
+      <div class="md-list-item" ng-repeat="element in contents | orderBy: element.date">
+        
+        <!--<div class="md-list-item-left circle bg-alizarin" ng-click="AdminCtrl.removeContent(element)">
+          <i class="icon material-icons i-24 cl-clouds">delete</i>
+        </div>
+        
+        <div class="md-list-item-left circle bg-emerald" ng-click="AdminCtrl.acceptContent(element)">
+          <i class="icon material-icons i-24 cl-clouds">done</i>
+        </div>-->
+        
+        <div ng-if="element.type == 0" class="button-pointer md-list-item-left circle bg-river" ui-sref="app.articlesShow({id: element._id})">
+          <i class="icon material-icons i-24 cl-clouds">remove_red_eye</i>
+        </div>
+        <div ng-if="element.type == 1" class="button-pointer md-list-item-left circle bg-river" ui-sref="app.templatesShow({id: element._id})">
+          <i class="icon material-icons i-24 cl-clouds">remove_red_eye</i>
+        </div>
+        <div ng-if="element.type == 2" class="button-pointer md-list-item-left circle bg-river" ui-sref="app.tutorialsShow({id: element._id})">
+          <i class="icon material-icons i-24 cl-clouds">remove_red_eye</i>
+        </div>
+        <div ng-if="element.type == 3" class="button-pointer md-list-item-left circle bg-river" ui-sref="app.toolsShow({id: element._id})">
+          <i class="icon material-icons i-24 cl-clouds">remove_red_eye</i>
+        </div> 
+        
+        <div class="md-list-item-content">
+          <h3 class="text-md">{{element.title}}</h3>
+          <small ng-if="element.type == 0" class="font-thin">Articolo</small>
+          <small ng-if="element.type == 1" class="font-thin">Template</small>
+          <small ng-if="element.type == 2" class="font-thin">Tutorial</small>
+          <small ng-if="element.type == 3" class="font-thin">Strumento</small>
+        </div>
+        
+      </div>
+    </div>
+    <div ng-if="!contents.length && cUser._id == user._id">
+      <h4>Non hai ancora contenuti sulla piattaforma!</h4>
+    </div>
+  
+  </md-content>
+  
+</section>
+
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+  
+  <md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Progetti a cui partecipi</h2>
+    </div>
+  </md-toolbar>
+  
+  <md-content class="md-padding">
+  
+    <div ng-if="userProjects.length" class="md-list md-whiteframe-z0 bg-white m-b">
+      <div class="md-list-item" ng-repeat="element in userProjects | orderBy: element.date">
+        
+        <div class="button-pointer md-list-item-left circle bg-river" ui-sref="app.projectsShow({id: element._id})">
+          <i class="icon material-icons i-24 cl-clouds">remove_red_eye</i>
+        </div>
+        
+        <div class="md-list-item-content">
+          <h3 class="text-md">{{element.title}}</h3>
+          <small class="font-thin">Progetto</small>
+        </div>
+        
+      </div>
+    </div>
+    <div ng-if="!userProjects.length && cUser._id == user._id">
+      <h4>Non partecipi a nessun progetto</h4>
+    </div>
+  
+  </md-content>
+  
+</section>
+
+<section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+  
+  <md-toolbar class="bg-asphalt">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Ruolo all'interno della piattaforma</h2>
+    </div>
+  </md-toolbar>
+  
+  <md-content class="md-padding">
+  
+    <div class="md-list md-whiteframe-z0 bg-white m-b">
+      <div class="md-list-item">
+        
+        <div class="md-list-item-content" ng-if="user.admin">
+          <h3 class="text-md">Admin</h3>
+          <small class="font-thin">User</small>
+        </div>
+        
+        <div class="md-list-item-content" ng-if="user.moderator">
+          <h3 class="text-md">Moderator</h3>
+          <small class="font-thin">User</small>
+        </div>
+        
+        <div class="md-list-item-content" ng-if="!user.moderator && !user.admin">
+          <h3 class="text-md">Normal</h3>
+          <small class="font-thin">User</small>
+        </div>
+        
+      </div>
+    </div>
+  
+  </md-content>
+  
+</section>
+
+<md-button class="md-fab md-fab-bottom-right left" aria-label="Insert Drive" style="position: fixed;" ui-sref="app.usersEdit({id: user._id})">
+  <i class="icon material-icons i-24">edit</i>
+  <md-tooltip md-visible="true" md-direction="left">
+    Modifica
+  </md-tooltip>
+</md-button>

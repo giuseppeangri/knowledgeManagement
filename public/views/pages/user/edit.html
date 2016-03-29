@@ -1,0 +1,122 @@
+<form name="userSettings">
+  
+  <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+    
+    <md-toolbar class="bg-asphalt">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Aggiorna le tue informazioni personali</h2>
+	    </div>
+	  </md-toolbar>
+    
+    <md-content class="md-padding">
+      
+      <!-- name -->
+      <md-input-container class="md-block input-form" style="width: 100%;">
+        <label class="input-label">Nome</label>
+        <input required name="name" ng-model="newUser.name" />
+        <div ng-messages="userSetting.name.$error">
+          <div ng-message="required">Questo campo &egrave; richiesto</div>
+          <div ng-message="md-maxlength">Il titolo deve avere meno di 100 caratteri</div>
+        </div>
+      </md-input-container>
+      
+      <!-- lastName -->
+      <md-input-container class="md-block input-form" style="width: 100%;">
+        <label class="input-label">Cognome</label>
+        <input required name="lastName" ng-model="newUser.lastName" />
+        <div ng-messages="userSetting.lastName.$error">
+          <div ng-message="required">Questo campo &egrave; richiesto</div>
+        </div>
+      </md-input-container>
+      
+      <!-- email -->
+      <md-input-container class="md-block input-form" style="width: 100%;">
+        <label class="input-label">Email</label>
+        <input required name="email" ng-model="newUser.email" />
+      </md-input-container>
+    
+      <!-- dataBirth -->
+      <md-input-container class="md-block input-form" style="width: 100%;">
+        <label class="input-label">Data di nascita</label>
+        <input type="date" name="dataBirth" ng-model="newUser.dataBirth" />
+      </md-input-container>
+      
+    </md-content>
+    
+  </section>
+  
+  <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;">
+    
+    <md-toolbar class="bg-alizarin">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Cambia Password</h2>
+	    </div>
+	  </md-toolbar>
+    
+    <md-content class="md-padding">
+      
+      <!-- password -->
+      <md-input-container class="md-block input-form" style="width: 100%;">
+        <label class="input-label">Inserisci la nuova password</label>
+        <input type="password" name="password" ng-model="newPassword" />
+        <div ng-messages="userSetting.password.$error">
+        </div>
+      </md-input-container>
+      
+      <!-- password confirm -->
+      <md-input-container class="md-block input-form" style="width: 100%;">
+        <label class="input-label">Inserisci di nuovo la nuova password</label>
+        <input type="password" name="confirmPassword" ng-model="passChange" />
+        <div ng-messages="userSetting.confirmPassword.$error">
+        </div>
+      </md-input-container>
+      
+    </md-content>
+    
+  </section>
+  
+  <section style="width: 70%; margin-left: auto; margin-right: auto; margin-bottom: 4%;" ng-if="cUser.admin">
+    
+    <md-toolbar class="bg-alizarin">
+	    <div class="md-toolbar-tools">
+	      <h2 class="md-flex">Concedi o revoca permessi da moderatore</h2>
+	    </div>
+	  </md-toolbar>
+    
+    <md-content class="md-padding">
+      
+      <md-checkbox md-no-ink ng-model="newUser.moderator" class="md-primary">
+        Moderatore
+      </md-checkbox>
+      
+    </md-content>
+    
+  </section>
+  
+  <div layout="row" style="position: fixed; bottom: 2%; right: 2%;">
+    <span flex></span>
+    <md-button class="md-fab left bg-emerald" aria-label="Salva" ng-click="UsersEditCtrl.save()" 
+    ng-disabled="">
+      <i class="icon material-icons i-24">save</i>
+      <md-tooltip md-visible="true" md-direction="top">
+        Salva
+      </md-tooltip>
+    </md-button>
+    <md-button ng-disabled="true" class="md-fab left bg-alizarin" aria-label="Elimina" ng-click="UsersEditCtrl.remove()">
+      <i class="icon material-icons i-24">delete</i>
+      <md-tooltip md-visible="true" md-direction="top">
+        Elimina
+      </md-tooltip>
+    </md-button>
+  </div>
+  
+   
+  <!--<md-button ng-disabled="newPassword != passChange" class="bg-emerald md-fab md-fab-bottom-right left" 
+             aria-label="Insert Drive" style="position: fixed;" ng-click="UsersEditCtrl.save()">
+    <i class="icon material-icons i-24">save</i>
+    <md-tooltip md-visible="true" md-direction="left">
+      Salva
+    </md-tooltip>
+  </md-button>-->
+  
+</form>
