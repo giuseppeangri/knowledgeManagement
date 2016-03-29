@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-sm-4" ng-repeat="tutorial in tutorials">
+    <div class="panel panel-card">
+      <div class="item">
+        <div class="index-card bg-asphalt-tr">
+          <i class="icon material-icons i-20 index-icon cl-sun">wb_incandescent</i>
+        </div>
+        <div class="bottom text-white p">
+          {{tutorial.author.name}} {{tutorial.author.lastName}}
+        </div>
+      </div>
+      <a ng-if="user._id == tutorial.author || user.admin || user.moderator" md-ink-ripple ui-sref="app.tutorialsEdit({id: tutorial._id})" class="md-btn md-raised md-fab brown m-r md-fab-offset pull-right">
+        <i style="margin-top: 9px;" class="material-icons">create</i>
+      </a>
+      <div class="p">
+        <a ui-sref="app.tutorialsShow({id: tutorial._id})"><h3>{{tutorial.title}}</h3></a>
+        <p>
+          {{tutorial.description | limitTo: 190}}
+          {{tutorial.description.lenght ? '...' : ''}}
+        </p>
+        <div ng-if="!tutorial.description">
+	        <p>Nessuna Descrizione inserita</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
